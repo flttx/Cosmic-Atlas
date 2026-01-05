@@ -1,0 +1,261 @@
+@import "tailwindcss";
+
+:root {
+  --atlas-void: #05080d;
+  --atlas-panel: #0b1312;
+  --atlas-glow: #6ef4b8;
+  --atlas-cyan: #4ef0df;
+  --atlas-ink: #0e1917;
+}
+
+@theme inline {
+  --color-background: var(--atlas-void);
+  --color-foreground: #eafff6;
+  --color-atlas-void: var(--atlas-void);
+  --color-atlas-panel: var(--atlas-panel);
+  --color-atlas-glow: var(--atlas-glow);
+  --color-atlas-cyan: var(--atlas-cyan);
+  --color-atlas-ink: var(--atlas-ink);
+  --font-sans: var(--font-space);
+  --font-mono: var(--font-plex);
+}
+
+body {
+  background-color: var(--atlas-void);
+  background-image: radial-gradient(circle at 50% 50%,
+      rgba(8, 14, 18, 0) 0%,
+      rgba(5, 8, 13, 0.45) 55%,
+      rgba(2, 4, 6, 0.75) 100%),
+    url("/assets/textures/nasa_starfield.jpg");
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  color: var(--color-foreground);
+  font-family: var(--font-sans), sans-serif;
+  overflow: hidden;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+canvas {
+  touch-action: none;
+}
+
+::selection {
+  background: rgba(110, 244, 184, 0.3);
+}
+
+@keyframes atlas-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes atlas-scan {
+  from {
+    background-position: 0 0;
+  }
+
+  to {
+    background-position: 0 140px;
+  }
+}
+
+.atlas-fade-in {
+  animation: atlas-fade-in 0.8s ease-out both;
+}
+
+.atlas-scanlines {
+  background: radial-gradient(circle at 50% 50%,
+      rgba(12, 20, 28, 0) 0%,
+      rgba(4, 8, 12, 0.45) 65%,
+      rgba(2, 4, 6, 0.75) 100%);
+  animation: none;
+}
+
+@keyframes intro-fade {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes intro-float {
+
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-6px);
+  }
+}
+
+@keyframes intro-line-reveal {
+  from {
+    width: 0;
+    opacity: 0;
+  }
+
+  to {
+    width: 100%;
+    opacity: 1;
+  }
+}
+
+.intro-line-reveal {
+  overflow: hidden;
+  white-space: nowrap;
+  animation: intro-line-reveal 2s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.glass-panel {
+  background: rgba(11, 19, 18, 0.7);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(110, 244, 184, 0.15);
+  box-shadow: 0 4px 24px -1px rgba(0, 0, 0, 0.4);
+}
+
+.glass-card {
+  background: rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(110, 244, 184, 0.1);
+  transition: all 0.3s ease;
+}
+
+.glass-card:hover {
+  background: rgba(110, 244, 184, 0.05);
+  border-color: rgba(110, 244, 184, 0.4);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 32px -4px rgba(110, 244, 184, 0.15);
+}
+
+.neon-border {
+  border-color: var(--atlas-glow);
+  box-shadow: 0 0 15px rgba(110, 244, 184, 0.3);
+}
+
+.neon-text {
+  text-shadow: 0 0 10px rgba(110, 244, 184, 0.5);
+}
+
+@keyframes pulse-glow {
+
+  0%,
+  100% {
+    opacity: 0.6;
+  }
+
+  50% {
+    opacity: 1;
+  }
+}
+
+.animate-pulse-glow {
+  animation: pulse-glow 3s ease-in-out infinite;
+}
+
+.star-field {
+  background-image: radial-gradient(1px 1px at 20px 30px, #fff, rgba(0, 0, 0, 0)),
+    radial-gradient(1px 1px at 40px 70px, #fff, rgba(0, 0, 0, 0)),
+    radial-gradient(2px 2px at 50px 160px, #ddd, rgba(0, 0, 0, 0)),
+    radial-gradient(2px 2px at 90px 40px, #fff, rgba(0, 0, 0, 0));
+  background-repeat: repeat;
+  background-size: 200px 200px;
+  animation: star-move 200s linear infinite;
+  opacity: 0.2;
+}
+
+@keyframes star-move {
+  from {
+    background-position: 0 0;
+  }
+
+  to {
+    background-position: 1000px 1000px;
+  }
+}
+
+.scanline-effect {
+  position: relative;
+  overflow: hidden;
+}
+
+.scanline-effect::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: rgba(110, 244, 184, 0.05);
+  box-shadow: 0 0 10px rgba(110, 244, 184, 0.1);
+  animation: scanline-move 8s linear infinite;
+  pointer-events: none;
+}
+
+.glitch-hover:hover {
+  animation: glitch-skew 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) both infinite;
+}
+
+@keyframes glitch-skew {
+  0% {
+    transform: skew(0deg);
+  }
+
+  20% {
+    transform: skew(-3deg);
+  }
+
+  40% {
+    transform: skew(3deg);
+  }
+
+  60% {
+    transform: skew(-1deg);
+  }
+
+  80% {
+    transform: skew(1deg);
+  }
+
+  100% {
+    transform: skew(0deg);
+  }
+}
+
+.interactive-btn {
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+.interactive-btn:active {
+  transform: scale(0.95);
+  background: rgba(110, 244, 184, 0.2);
+}
+
+@keyframes scanline-move {
+  0% {
+    transform: translateY(-100%);
+  }
+
+  100% {
+    transform: translateY(1000%);
+  }
+}

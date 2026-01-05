@@ -1,0 +1,23 @@
+version: "3.9"
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: cosmic-atlas-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: cosmic_atlas
+    ports:
+      - "5432:5432"
+    volumes:
+      - cosmic-atlas-pg:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d cosmic_atlas"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  cosmic-atlas-pg:
