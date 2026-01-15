@@ -40,8 +40,8 @@ export default function WarpOverlay() {
       style={{
         opacity: alpha,
         background: `
-          radial-gradient(circle at 50% 50%, rgba(110, 244, 184, 0.4) 0%, transparent 40%),
-          repeating-conic-gradient(from 0deg, rgba(110, 244, 184, 0.1) 0deg 0.5deg, transparent 1deg 10deg)
+          radial-gradient(circle at 50% 50%, rgba(125, 211, 252, 0.42) 0%, transparent 40%),
+          repeating-conic-gradient(from 0deg, rgba(125, 211, 252, 0.12) 0deg 0.5deg, transparent 1deg 10deg)
         `,
         mixBlendMode: "screen",
         filter: "blur(2px) contrast(1.2)",

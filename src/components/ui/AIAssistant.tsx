@@ -1,13 +1,18 @@
 "use client";
 
 import { useAppState } from "@/components/state/app-state";
-import { useEffect, useState } from "react";
+import { useHydrated } from "@/lib/use-hydrated";
+import Image from "next/image";
+import { useMemo } from "react";
 
 export default function AIAssistant() {
     const { selectedObject } = useAppState();
-    const [message, setMessage] = useState("System Ready. Awaiting navigation command.");
+    const hydrated = useHydrated();
 
-    useEffect(() => {
+    const message = useMemo(() => {
+        if (!hydrated) {
+            return "System Ready. Awaiting navigation command.";
+        }
         if (selectedObject) {
             const messages = [
                 `Analyzing ${selectedObject.name}...`,
@@ -15,20 +20,25 @@ export default function AIAssistant() {
                 `Telemetry synchronized with ${selectedObject.id}`,
                 "Atmospheric data incoming...",
             ];
-            setMessage(messages[Math.floor(Math.random() * messages.length)]);
-        } else {
-            setMessage("Orbiting... Scanning for points of interest.");
+            const hash = selectedObject.id
+                .split("")
+                .reduce((acc, char) => (acc * 33 + char.charCodeAt(0)) >>> 0, 5381);
+            return messages[hash % messages.length];
         }
-    }, [selectedObject]);
+        return "Orbiting... Scanning for points of interest.";
+    }, [hydrated, selectedObject]);
 
     return (
         <div className="flex items-center space-x-4 p-4 glass-panel rounded-2xl border-atlas-glow/10">
             {/* Hologram Circle */}
             <div className="relative w-16 h-16 rounded-full overflow-hidden hologram-container border border-atlas-glow/30 bg-atlas-ink/40">
-                <img
+                <Image
                     src="/assets/images/ai-avatar.png"
                     alt="AI Assistant"
-                    className="w-full h-full object-cover hologram-img opacity-80"
+                    fill
+                    sizes="64px"
+                    className="object-cover hologram-img opacity-80"
+                    priority={false}
                 />
                 {/* Animated Scanline Overlay */}
                 <div className="absolute inset-0 bg-gradient-to-b from-transparent via-atlas-glow/5 to-transparent animate-pulse" />
@@ -45,7 +55,7 @@ export default function AIAssistant() {
                     </div>
                 </div>
                 <p className="text-xs text-white/70 font-mono line-clamp-2 italic leading-relaxed">
-                    "{message}"
+                    {`“${message}”`}
                 </p>
             </div>
         </div>

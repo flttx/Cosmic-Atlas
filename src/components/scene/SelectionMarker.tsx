@@ -2,7 +2,7 @@
 
 import { useAppState } from "@/components/state/app-state";
 import { useFrame } from "@react-three/fiber";
-import { useRef, useMemo } from "react";
+import { useRef } from "react";
 import * as THREE from "three";
 
 export function SelectionMarker() {
@@ -37,13 +37,12 @@ export function SelectionMarker() {
         <group ref={groupRef} position={selectedObject.position}>
             <mesh ref={ringRef1} rotation={[Math.PI / 2, 0, 0]}>
                 <ringGeometry args={[radius * 1.1, radius * 1.15, 64]} />
-                <meshBasicMaterial color="#6ef4b8" transparent opacity={0.4} side={THREE.DoubleSide} />
+                <meshBasicMaterial color="#7dd3fc" transparent opacity={0.35} side={THREE.DoubleSide} />
             </mesh>
             <mesh ref={ringRef2} rotation={[Math.PI / 2, 0, 0]}>
                 <ringGeometry args={[radius * 1.2, radius * 1.22, 4, 1, 0, Math.PI * 0.2]} />
-                <meshBasicMaterial color="#6ef4b8" transparent opacity={0.6} side={THREE.DoubleSide} />
+                <meshBasicMaterial color="#7dd3fc" transparent opacity={0.55} side={THREE.DoubleSide} />
             </mesh>
-            <gridHelper args={[radius * 4, 8, "#6ef4b8", "#0a1a15"]} rotation={[Math.PI / 2, 0, 0]} />
         </group>
     );
 }

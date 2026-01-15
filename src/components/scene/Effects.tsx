@@ -3,17 +3,13 @@
 import { useAppState } from "@/components/state/app-state";
 import { EffectComposer, Bloom, Noise, Vignette, ChromaticAberration } from "@react-three/postprocessing";
 import { BlendFunction } from "postprocessing";
-import { useEffect, useState } from "react";
+import { useHydrated } from "@/lib/use-hydrated";
 
 export function Effects() {
     const { settings } = useAppState();
-    const [mounted, setMounted] = useState(false);
+    const hydrated = useHydrated();
 
-    useEffect(() => {
-        setMounted(true);
-    }, []);
-
-    if (!mounted || settings.quality === "low") return null;
+    if (!hydrated || settings.quality === "low") return null;
 
     return (
         <EffectComposer disableNormalPass>
